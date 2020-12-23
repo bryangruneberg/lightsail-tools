@@ -1,0 +1,10 @@
+LIGHTSAILDIR=/home/ubuntu/lightsail-tools/
+
+# update route53
+* * * * * (~/bin/set-dns-ip.sh) 2>&1 | logger
+
+# Clone Dropbox to S3
+1 12 * * * (/home/ubuntu/bin/clone-dropbox-to-s3.sh) 2>&1 | logger
+
+# Clone SSH keys to S3
+1 12 * * * (/home/ubuntu/bin/clone-ssh-keystore-to-s3.sh) 2>&1 | logger
