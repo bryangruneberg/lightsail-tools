@@ -40,7 +40,11 @@ COMMENT="Auto updating @ `date`"
 TYPE="A"
 
 # Get the external IP address from OpenDNS (more reliable than other providers)
-IP=`/sbin/ifconfig $DEVICE | grep "inet " | awk '{print $2}' 2>/dev/null`
+if [ -f /sbin/ifconfig ]; then 
+	IP=`/sbin/ifconfig $DEVICE | grep "inet " | awk '{print $2}' 2>/dev/null`
+else
+	IP=`/sbin/ip -br addr | grep -e "^$DEVICE" | awk '{print $3}' | awk -F "/" '{print $1}' 2>/dev/null`
+fi 
 
 if [ -z "$IP" ]; then
   echo "No IP is set :("
